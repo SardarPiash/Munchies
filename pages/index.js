@@ -10,8 +10,10 @@ function Home() {
   const [categorylist, setCategorylist] = useState("");
   const [categoryProduct, setCategoryProduct] = useState("");
   const [interestProduct, setInterestProduct] = useState("");
+
   useEffect(() => {
     try {
+      ////fetch product list.......
       const fetchProductList = async () => {
         const response = await axios.get(`https://fakestoreapi.com/products`);
         setProductList(response.data);
@@ -22,6 +24,7 @@ function Home() {
     }
 
     try {
+      ////fetch categories..........
       const fetchCatagory = async () => {
         const response = await axios.get(
           `https://fakestoreapi.com/products/categories`
@@ -32,10 +35,12 @@ function Home() {
     } catch (error) {
       console.log(error);
     }
+
   }, []);
 
   useEffect(() => {
     try {
+      /////Filter products................
       const fetchCatagoryProduct = async () => {
         const response = await axios.get(
           `https://fakestoreapi.com/products/category/${categoryProduct}`
@@ -49,12 +54,14 @@ function Home() {
       console.log(error);
     }
   }, [categoryProduct]);
+////adding dependency array to load the effect based on dependency array.........
 
+///a function to filter the product based on category from the toall product list.....
   const productsByCategory = (category) => {
     const filteredProducts = productList.filter(
       (product) => product.category === category
     );
-
+///////view details function........
     const viewDetails = (id) => {
       router.push(`/product/${id}`);
     };
@@ -135,7 +142,6 @@ function Home() {
                       </span>
                     </div>
                     <p className="text-gray-600">${product.price}</p>
-
                     <button
                       onClick={() => viewDetails(product.id)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -151,12 +157,15 @@ function Home() {
       </>
     );
   };
-
+  /// Add new function..........
+  const handleAddNew = () => {
+    router.push("/addProduct");
+  };
   return (
     <>
       <Header />
-      <div className="justify-start items-start mt-1">
-        <p className="inline-block">
+      <div className="flex justify-between items-start mt-1">
+        <p className="inline-block mr-2">
           Sort By:
           <select
             className="bg-white text-body block p-2 border border-gray-300 rounded-lg inline-block"
@@ -177,6 +186,18 @@ function Home() {
               ))}
           </select>
         </p>
+        <div>
+          <button
+            type="button"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddNew();
+            }}
+          >
+            Add new Product
+          </button>
+        </div>
       </div>
 
       <div>

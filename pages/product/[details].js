@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 
 export default function Details() {
   const router = useRouter();
+  ///store productID into id from query....
   const id = router.query.details;
   const [productDetails, setProductDetails] = useState(null);
 
@@ -14,6 +15,7 @@ export default function Details() {
     if (id) {
       const fetchDetails = async () => {
         try {
+          //fetch details data based on id taken from query parametre
           const response = await axios.get(
             `https://fakestoreapi.com/products/${id}`
           );
@@ -25,6 +27,23 @@ export default function Details() {
       fetchDetails();
     }
   }, [id]);
+
+  const handleDelete = async(id)=>{
+    try {
+      const response = await axios.delete(
+        `https://fakestoreapi.com/products/${id}`
+      );
+      ///If delete successfully,api return the list of deleted product...........
+      console.log(response.data);
+      if(response.data){
+        let msg = "Delete";
+            router.push(`/`);
+      }
+    } catch (error) {
+      ///print error into console if any error occurs at the time of featching api......
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -54,12 +73,15 @@ export default function Details() {
             </div>
           </div>
         )}
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 space-x-2">
           <Link href="/">
             <button className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md">
               Back
             </button>
           </Link>
+          <button className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md" onClick={()=>handleDelete(productDetails.id)}>
+              Delete
+            </button>
         </div>
       </div>
       <Footer />
