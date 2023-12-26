@@ -55,7 +55,7 @@ export default function Details() {
           </div>
         )}
         <div className="flex justify-center mt-4">
-          <Link href="/home">
+          <Link href="/">
             <button className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md">
               Back
             </button>
