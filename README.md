@@ -16,3 +16,6 @@ To run the project locally:
 2. Navigate to the project directory: `cd Munchies`
 3. Install dependencies: `npm i`
 4. Run the development server: `npm run dev`
+
+
+Live Deploy link: https://munchies-v9fs.vercel.app/
